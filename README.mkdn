@@ -24,3 +24,18 @@ All supported devices are built weekly and periodically as changes are committed
 You can view the current build statuses at [LineageOS Buildkite](https://buildkite.com/lineageos).
 
 Builds produced weekly by the buildbot can be downloaded from [LineageOS downloads](https://download.lineageos.org/).
+
+## PBRP recovery layer
+
+This fork retains the Android 17 LineageOS base and adds scoped recovery
+configuration at `config/recovery.mk` and `config/BoardConfigRecovery.mk`.
+Recovery Soong defaults, flag exports, policy and command helpers are under
+`build/soong/recovery`, `config/recovery`, `sepolicy/recovery` and
+`build/recovery`. ROM common configuration remains separate. Recovery products
+must opt into the recovery includes; they do not inherit the ROM package set.
+
+The source layer is migrated from
+[PBRP vendor configuration](https://github.com/pbrp-alioth-a17/vendor_pb/commit/7c06e9730273fbfa283ea75a829186c4cb49c76e),
+with its flags and policy retained. Current Lineage kernel/header rules,
+compiler selection and host tools replace the older duplicate infrastructure.
+See the [shared recovery build instructions](https://github.com/pbrp-alioth-a17/android_bootable_recovery/blob/pbrp-a17/README.md).

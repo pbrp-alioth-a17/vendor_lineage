@@ -1022,3 +1022,8 @@ function build_kernel() {
     chmod -x "${target_kernel_dir}/"*
     echo "Kernel build output copied to ${target_kernel_dir}/"
 }
+
+# Recovery helpers extend the A17 environment only in a PBRP source tree.
+if [[ -f "$ANDROID_BUILD_TOP/bootable/recovery/variables.h" ]]; then
+    source "$ANDROID_BUILD_TOP/vendor/lineage/build/recovery/envsetup.sh"
+fi
