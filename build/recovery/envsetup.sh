@@ -9,6 +9,8 @@ Additional PBRP functions (standard lunch and m remain available):
 - recoveryout: Change directory to the selected product's output directory.
 - recoverypackage <repo-relative Python script> [arguments]: Run the selected
   device's packaging/validation script; no Alioth path is assumed.
+- recoverysync <project paths> or --device <device directory>: explicitly fetch
+  manifest-known optional dependencies; --check performs an offline preflight.
 - repopick: Fetch changes from Gerrit.
 EOF
 }
@@ -72,3 +74,10 @@ function mka() {
 }
 
 alias twrppick='repopick -g https://gerrit.twrp.me'
+
+function recoverysync() {
+    local top
+    top=$(gettop) || return
+    [[ -n "$top" ]] || return 2
+    python3 "$top/vendor/lineage/build/tools/recoverysync.py" "$@"
+}

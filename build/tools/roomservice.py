@@ -27,6 +27,13 @@ import urllib.parse
 import urllib.request
 from xml.etree import ElementTree
 
+# This recovery checkout has a curated manifest and explicit optional sync.
+# Do not turn a missing product or bootstrap error into an implicit ROM fetch.
+if os.path.isfile("bootable/recovery/variables.h") and os.path.isfile("vendor/lineage/config/recovery.mk"):
+    if len(sys.argv) < 3:
+        print("Recovery product unavailable. Sync its device/dependencies explicitly with recoverysync or a local manifest.")
+    sys.exit(0)
+
 dryrun = os.getenv('ROOMSERVICE_DRYRUN') == 'true'
 if dryrun:
     print('Dry run roomservice, no change will be made.')
